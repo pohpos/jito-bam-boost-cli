@@ -190,6 +190,7 @@ impl BamBoostCliHandler {
             let claim_status_acc = self
                 .get_account::<ClaimStatus>(&Pubkey::new_from_array(claim_status_pda.to_bytes()))?;
             log::info!("ClaimStatus: {claim_status_acc:?}");
+            println!("{}", claim_status_acc.amount);
         }
 
         Ok(())
@@ -200,12 +201,13 @@ impl BamBoostCliHandler {
 
         let claim_status_pda = self.claim_status_address(claimant, distributor_pda);
 
-        println!("ClaimStatus PDA: {claim_status_pda}");
+        log::info!("ClaimStatus PDA: {claim_status_pda}");
 
         let account =
             self.get_account::<ClaimStatus>(&Pubkey::new_from_array(claim_status_pda.to_bytes()))?;
 
-        println!("{}", serde_json::to_string_pretty(&account)?);
+        log::info!("{}", serde_json::to_string_pretty(&account)?);
+        println!("{}", account.amount);
 
         Ok(())
     }
